@@ -59,5 +59,4 @@ Current files:
     ├── picorv32_pcpi_vec.v
     ├── picorv32_vec_top.v
     ├── tb_picorv32_vec_top.v
-    ├── tb_picorv32_vec_top
     └── tb_picorv32_vec_top.vcd
