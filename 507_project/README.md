@@ -4,9 +4,11 @@
 
 For our ECE 507 project, we are designing a basic SIMD vector co-processor for the PicoRV32 RISC-V core. The goal is to add a small custom hardware module that can improve simple data-parallel operations. Our current design uses the Pico Co-Processor Interface (PCPI), which allows an external co-processor to receive operands from the PicoRV32 core and return results back to the register file.
 
-The first version of the module uses a 32-bit data path divided into four 8-bit lanes. It supports four basic operations: VADD8, VSUB8, VAND, and VOR. VADD8 and VSUB8 perform four parallel 8-bit additions or subtractions, while VAND and VOR perform 32-bit bitwise logic operations. So far, we have completed the standalone Verilog module, a standalone testbench, and a basic PicoRV32 integration wrapper. The current standalone simulation passes all five tests, including vector addition, vector subtraction, bitwise AND, bitwise OR, and invalid instruction handling.
+The first version of the module uses a 32-bit data path divided into four 8-bit lanes. It supports four basic operations: VADD8, VSUB8, VAND, and VOR. VADD8 and VSUB8 perform four parallel 8-bit additions or subtractions, while VAND and VOR perform 32-bit bitwise logic operations.
 
-The next step is to create a more complete PicoRV32-level test where the processor executes custom instructions through PCPI. After that, we plan to use SiliconCompiler / SkyWater 130nm flow for synthesis, layout, and area/timing analysis.
+So far, we have completed the standalone Verilog module, a standalone testbench, a basic PicoRV32 integration wrapper, and a processor-level custom instruction execution test. The standalone simulation passes all five tests, including vector addition, vector subtraction, bitwise AND, bitwise OR, and invalid instruction handling. The processor-level test also confirms that PicoRV32 can execute a custom VADD8 instruction through PCPI and produce the correct result.
+
+The next step is to use SiliconCompiler / SkyWater 130nm flow for synthesis, layout, and area/timing analysis.
 
 ---
 
@@ -31,12 +33,14 @@ Completed so far:
 - Added the custom vector module into the PicoRV32 project folder
 - Created a basic PicoRV32 integration wrapper
 - Ran a basic PicoRV32 + PCPI vector unit integration simulation
+- Created a processor-level custom instruction execution test
+- Verified that PicoRV32 can execute a custom VADD8 instruction through PCPI
+- Confirmed the expected VADD8 result: `0x06080A0C`
 
 Still needs to be completed:
 
-- Create a more complete custom instruction test
-- Verify that PicoRV32 can execute the custom vector operations through PCPI
 - Add more comments and clean up the Verilog files
+- Add more custom instruction execution tests for VSUB8, VAND, and VOR
 - Run synthesis / layout using SiliconCompiler and SkyWater 130nm flow
 - Collect area, timing, and performance results
 - Write the final report
@@ -59,4 +63,7 @@ Current files:
     ├── picorv32_pcpi_vec.v
     ├── picorv32_vec_top.v
     ├── tb_picorv32_vec_top.v
-    └── tb_picorv32_vec_top.vcd
+    ├── tb_picorv32_vec_top.vcd
+    ├── picorv32_vec_program_top.v
+    ├── tb_picorv32_vec_program_top.v
+    └── tb_picorv32_vec_program_top.vcd
